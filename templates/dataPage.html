@@ -1,0 +1,126 @@
+﻿<div ng-controller="TraineesCtrl">
+    <!-- TOP PAGE ACTIONS BAR-->
+    <section id="trActions" class="row">
+        <form class="form-horizontal" novalidate>
+            <fieldset>
+                <div class="col-md-7">
+                    <div class="form-group">
+                        <input class="form-control" name="searchWord" ng-model="dataPage.searchWord" placeholder="Enter search text here" />
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <button class="btn btn-default" type="button" ng-click="add()">Add</button>
+                    <button class="btn btn-default" type="button" ng-click="delete(dataPage.newTrainee.id)" ng-disabled="dataPage.newTrainee.id==null">Remove</button>
+                </div>
+            </fieldset>
+        </form>
+    </section>
+    <section class="row">
+
+        <!-- LIST -->
+        <section id="trList" class="col-md-7">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Grade</th>
+                        <th>Subject</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr dir-paginate="trainee in trainees | filter:dataPage.searchWord | orderBy: 'id' | itemsPerPage: pageSize" ng-click="edit(trainee.id)">
+                        <td>{{ trainee.id }}</td>
+                        <td>{{ trainee.name }}</td>
+                        <td>{{ trainee.date | date:'dd/MM/yyyy'}}</td>
+                        <td>{{ trainee.grade }}</td>
+                        <td>{{ trainee.subject }}</td>  
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>
+                           <dir-pagination-controls boundary-links="true" template-url="js/directives/pagination/dirPagination.tpl.html"></dir-pagination-controls>
+                        </td>
+                    </tr>
+
+                </tfoot>
+            </table>
+        </section>
+
+        <!-- FORM -->
+        <section id="trForm" class="col-md-5">
+            <form name="traineeForm" class="form-horizontal" novalidate>
+                <fieldset>
+                    <div class="form-group">
+                        <lable for="id" class="col-md-2 control-label">ID:</lable>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="id" ng-model="dataPage.newTrainee.id" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error' : traineeForm.name.$invalid}">
+                        <lable for="name" class="col-md-2 control-label">Name:</lable>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="name" ng-model="dataPage.newTrainee.name" required autofocus>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error' : traineeForm.grade.$invalid}">
+                        <lable for="grade" class="col-md-2 control-label">Grade:</lable>
+                        <div class="col-md-10">
+                            <input type="number" class="form-control" name="grade" placeholder="Grade from 1 to 100" ng-model="dataPage.newTrainee.grade" required min="0" max="100">
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error' : traineeForm.email.$invalid}">
+                        <lable for="email" class="col-md-2 control-label">Email:</lable>
+                        <div class="col-md-10">
+                            <input type="email" class="form-control" name="email" ng-model="dataPage.newTrainee.email" required>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error' : traineeForm.date.$invalid}">
+                        <lable for="date" class="col-md-2 control-label">Date Joined:</lable>
+                        <div class="col-md-10">
+                            <input type="date" class="form-control" name="date" ng-model="dataPage.newTrainee.date" required>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error' : traineeForm.address.$invalid}">
+                        <lable for="address" class="col-md-2 control-label">Address:</lable>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="address" ng-model="dataPage.newTrainee.address" required>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error' : traineeForm.city.$invalid}">
+                        <lable for="city" class="col-md-2 control-label">City:</lable>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="city" ng-model="dataPage.newTrainee.city" required>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error' : traineeForm.country.$invalid}">
+                        <lable for="country" class="col-md-2 control-label">Country:</lable>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="country" ng-model="dataPage.newTrainee.country" required>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error' : traineeForm.zip.$invalid}">
+                        <lable for="zip" class="col-md-2 control-label">ZIP:</lable>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="zip" ng-model="dataPage.newTrainee.zip" required>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error' : traineeForm.subject.$invalid}">
+                        <lable for="subject" class="col-md-2 control-label">Subject:</lable>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="subject" ng-model="dataPage.newTrainee.subject" required>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-md-3 col-md-offset-9">
+                            <button class="btn btn-primary btn-block" type="button" ng-click="save()" ng-disabled="traineeForm.$invalid">Save</button>
+                        </div>
+
+                    </div>
+                </fieldset>
+            </form>
+        </section>
+    </section>
+</div>
